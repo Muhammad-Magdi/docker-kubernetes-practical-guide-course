@@ -4,31 +4,31 @@ build-docker:
 serve-docker:
 	docker run \
 		-d \
-		-v multi-data:/data/db \
-		--network multi-network \
 		--name multi-mongo \
+		--network multi-network \
 		--rm \
+		-v multi-data:/data/db \
 		mongo:focal && \
 	docker run \
 		-d \
+		--env-file ./backend/.env \
+		--name multi-back \
+		--network multi-network \
 		-p 80:80 \
+		--rm \
 		-v ${PWD}/backend:/app \
 		-v /app/node_modules \
-		--name multi-back \
-		--rm \
-		--network multi-network \
 		multi-back && \
 	docker run \
-		-it \
 		-d \
-		-e NODE_OPTIONS=--openssl-legacy-provider \
+		--env-file ./frontend/.env \
+		-it \
+		--name multi-front \
+		--network multi-network \
 		-p 3000:3000 \
+		--rm \
 		-v ${PWD}/frontend:/app \
 		-v /app/node_modules \
-		--name multi-front \
-		--rm \
-		--network multi-network \
-		-e CHOKIDAR_USEPOLLING=true \
 		multi-front
 stop-docker:
 	docker stop multi-front multi-back multi-mongo

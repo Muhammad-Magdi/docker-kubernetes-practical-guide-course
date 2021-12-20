@@ -84,7 +84,7 @@ app.delete('/goals/:id', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://multi-mongo:27017/course-goals',
+  process.env.DB_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -95,7 +95,7 @@ mongoose.connect(
       console.error(err);
     } else {
       console.log('CONNECTED TO MONGODB');
-      app.listen(80);
+      app.listen(process.env.PORT);
     }
   }
 );
