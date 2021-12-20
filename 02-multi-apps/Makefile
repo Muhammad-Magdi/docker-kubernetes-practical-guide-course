@@ -4,6 +4,8 @@ build-docker:
 serve-docker:
 	docker run \
 		-d \
+		-e "MONGO_INITDB_ROOT_USERNAME=magdi" \
+		-e "MONGO_INITDB_ROOT_PASSWORD=password" \
 		--name multi-mongo \
 		--network multi-network \
 		--rm \
