@@ -24,7 +24,6 @@ serve-docker:
 		--env-file ./frontend/.env \
 		-it \
 		--name multi-front \
-		--network multi-network \
 		-p 3000:3000 \
 		--rm \
 		-v ${PWD}/frontend:/app \
