@@ -28,6 +28,27 @@ services:
     volumes:
       - data:/var/lib/mysql
 
+  composer:
+    build:
+      context: .
+      dockerfile: dockerfiles/composer.dockerfile
+    volumes:
+      - ./src:/var/www/html
+
+  artisan:
+    build:
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    entrypoint: ['php', '/var/www/html/artisan']
+    volumes:
+      - ./src:/var/www/html
+
+  npm:
+    build:
+      context: .
+      dockerfile: dockerfiles/npm.dockerfile
+    volumes:
+      - ./src:/var/www/html
   
 volumes:
   data:
